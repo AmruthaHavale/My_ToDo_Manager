@@ -1,0 +1,2 @@
+For revising database connectivity look into application.properties, todoapplication,
+todo java class(entity), and todo repository.

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <p class="heading">My Todo List Manager</p>
+
+    <form th:action="@{/add}" method="post" th:object="${todo}">
+        <div class="addTask">
+            <input type="text"
+                    th:field="*{task}"
+                    placeholder="Enter a new task"
+                    required>
+
+            <button type="submit">Submit task</button>
+        </div>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Status</th>
+            <th>Task Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.id}"></td>
+
+            <td>
+                <form th:action="@{/toggle/{id}(id=${task.id})}" method="post">
+                    <input type="checkbox"
+                           th:checked="${task.completed}"
+                           onchange="this.form.submit()">
+                </form>
+            </td>
+
+            <td>
+            <span th:text="${task.task}"
+                  th:classappend="${task.completed} ? 'completed' : ''">
+            </span>
+            </td>
+
+            <td>
+                <a class="edit-btn"
+                   th:href="@{/edit/{id}(id=${task.id})}">
+                    Edit
+                </a>
+            </td>
+
+            <td>
+                <a class="delete-btn"
+                   th:href="@{/delete/{id}(id=${task.id})}">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
